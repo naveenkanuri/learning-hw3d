@@ -1,12 +1,27 @@
 #include <Windows.h>
+#include "WindowsMessageMap.h"
 
 // our custom WindowProcedure to handle windows' messages
 LRESULT CALLBACK WndProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )
 {
+	static WindowsMessageMap wmm;
+	OutputDebugString( wmm( msg, wParam, lParam ).c_str() );
 	switch( msg )
 	{
 	case WM_CLOSE:
 		PostQuitMessage( 69 );
+		break;
+	case WM_KEYDOWN:
+		if( wParam == 'F' )
+		{
+			SetWindowText( hWnd, L"Hi Honey" );
+		}
+		break;
+	case WM_KEYUP:
+		if( wParam == 'F' )
+		{
+			SetWindowText( hWnd, L"How are you" );
+		}
 		break;
 	}
 	return DefWindowProc( hWnd, msg, wParam, lParam );
