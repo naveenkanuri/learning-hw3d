@@ -19,9 +19,28 @@ int CALLBACK WinMain(
 		{
 			TranslateMessage( &msg );
 			DispatchMessage( &msg );
-			if( wnd.kbd.KeyIsPressed( VK_MENU ) )
+
+			//do app logic test
+			while( !wnd.mouse.IsEmpty() )
 			{
-				MessageBox( nullptr, "ALT Pressed", "ALT", 0 );
+				const auto e = wnd.mouse.Read();
+				switch( e.GetType() )
+				{
+				case Mouse::Event::Type::WheelUp:
+				{
+					std::ostringstream oss;
+					oss << "Mouse Wheel Up: " << wnd.mouse.GetDelta();
+					wnd.SetTitle( oss.str() );
+				}
+					break;
+				case Mouse::Event::Type::WheelDown:
+					{
+						std::ostringstream oss;
+						oss << "Mouse Wheel Down: " << wnd.mouse.GetDelta();
+						wnd.SetTitle( oss.str() );
+					}
+					break;
+				}
 			}
 		}
 

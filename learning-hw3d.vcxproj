@@ -160,6 +160,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="hw3d\HoneyException.cpp" />
+    <ClCompile Include="hw3d\Mouse.cpp" />
     <ClCompile Include="hw3d\Window.cpp" />
     <ClCompile Include="hw3d\WindowsMessageMap.cpp" />
     <ClCompile Include="hw3d\WinMain.cpp" />
@@ -168,6 +169,7 @@
   <ItemGroup>
     <ClInclude Include="hw3d\HoneyException.h" />
     <ClInclude Include="hw3d\HoneyWin.h" />
+    <ClInclude Include="hw3d\Mouse.h" />
     <ClInclude Include="hw3d\Window.h" />
     <ClInclude Include="hw3d\WindowsMessageMap.h" />
     <ClInclude Include="hw3d\resource.h" />
