@@ -33,6 +33,12 @@
     <ClCompile Include="hw3d\Mouse.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="hw3d\App.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="hw3d\HoneyTimer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="hw3d\WindowsMessageMap.h">
@@ -54,6 +60,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="hw3d\Mouse.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="hw3d\App.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="hw3d\HoneyTimer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
