@@ -1,12 +1,13 @@
 #include "Window.h"
+#include <sstream>
+#include "resource.h"
 
 Window::WindowClass Window::WindowClass::wndClass;
-
-
 
 Window::WindowClass::WindowClass() noexcept
 	:hInst(GetModuleHandle(nullptr))
 {
+	
 	// register window class
 	WNDCLASSEX wc = { 0 };
 	wc.cbSize = sizeof( wc );
@@ -15,12 +16,12 @@ Window::WindowClass::WindowClass() noexcept
 	wc.cbClsExtra = 0;
 	wc.cbWndExtra = 0;
 	wc.hInstance = GetInstance();
-	wc.hIcon = nullptr;
+	wc.hIcon = static_cast< HICON >( LoadImage( hInst, MAKEINTRESOURCE(IDI_ICON1), IMAGE_ICON, 32, 32, 0) );
 	wc.hCursor = nullptr;
 	wc.hbrBackground = nullptr;
 	wc.lpszMenuName = nullptr;
 	wc.lpszClassName = GetName();
-	wc.hIconSm = nullptr;
+	wc.hIconSm = static_cast< HICON >( LoadImage( hInst, MAKEINTRESOURCE( IDI_ICON1 ), IMAGE_ICON, 16, 16, 0 ) );
 
 	RegisterClassEx( &wc );
 }
@@ -30,7 +31,7 @@ Window::WindowClass::~WindowClass() noexcept
 	UnregisterClass( wndClassName, GetInstance() );
 }
 
-const wchar_t* Window::WindowClass::GetName() noexcept
+const char* Window::WindowClass::GetName() noexcept
 {
 	return wndClassName;
 }
@@ -40,7 +41,7 @@ HINSTANCE Window::WindowClass::GetInstance() noexcept
 	return wndClass.hInst;
 }
 
-Window::Window( int width, int height, const wchar_t* name ) noexcept
+Window::Window( int width, int height, const char* name ) 
 {
 	//calculate window size based on desired client region
 	RECT wr;
@@ -49,7 +50,11 @@ Window::Window( int width, int height, const wchar_t* name ) noexcept
 	wr.top = 100;
 	wr.bottom = height + wr.top;
 
-	AdjustWindowRect( &wr, WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU, FALSE );
+	//todo correct this
+	if( FAILED( AdjustWindowRect( &wr, WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU, FALSE ) ) )
+	{
+		throw HONEY_LAST_EXCEPT();
+	}
 
 	//create window and get hWnd
 	hWnd = CreateWindow(
@@ -66,6 +71,10 @@ Window::Window( int width, int height, const wchar_t* name ) noexcept
 		, this
 	);
 
+	if( hWnd == nullptr )
+	{
+		throw HONEY_LAST_EXCEPT();
+	}
 	//show window
 	ShowWindow( hWnd, SW_SHOWDEFAULT );
 }
@@ -116,3 +125,58 @@ LRESULT Window::HandleMsg( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )
 	return DefWindowProc( hWnd, msg, wParam, lParam );
 }
 
+Window::Exception::Exception( int line, const char* file, HRESULT hr ) noexcept
+	:HoneyException(line,file)
+	,hr(hr)
+{ }
+
+const char* Window::Exception::what() const noexcept
+{
+	std::ostringstream oss;
+	oss << GetType() << std::endl
+		<< "[Error Code] " << GetErrorCode() << std::endl
+		<< "[Description] " << GetErrorString() << std::endl
+		<< GetOriginString();
+
+	whatBuffer = oss.str();
+	return whatBuffer.c_str();
+}
+
+const char* Window::Exception::GetType() const noexcept
+{
+	return "Honey Window Exception";
+}
+
+std::string Window::Exception::TranslateErrorCode( HRESULT hr ) noexcept
+{
+	char* pMsgBuf = nullptr;
+	DWORD nMsgLen = FormatMessage(
+		FORMAT_MESSAGE_ALLOCATE_BUFFER |
+		FORMAT_MESSAGE_FROM_SYSTEM |
+		FORMAT_MESSAGE_IGNORE_INSERTS
+		, nullptr
+		, hr
+		, MAKELANGID( LANG_NEUTRAL, SUBLANG_DEFAULT )
+		, reinterpret_cast< LPSTR >( &pMsgBuf )
+		, 0
+		, nullptr
+	);
+
+	if( nMsgLen == 0 )
+	{
+		return "Undefined error code";
+	}
+	std::string errorString = pMsgBuf;
+	LocalFree( pMsgBuf );
+	return errorString;
+}
+
+HRESULT Window::Exception::GetErrorCode() const noexcept
+{
+	return hr;
+}
+
+std::string Window::Exception::GetErrorString() const noexcept
+{
+	return TranslateErrorCode( hr );
+}

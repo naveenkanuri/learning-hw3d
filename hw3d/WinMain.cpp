@@ -54,21 +54,37 @@ int CALLBACK WinMain(
 	_In_ LPSTR lpCmdLine,
 	_In_ int nShowCmd )
 {
-	Window wnd( 800, 300, L"Honey Window!" );
-
-	// message pump
-	MSG msg;
-	BOOL gResult;
-	while( gResult = ( GetMessage( &msg, nullptr, 0, 0 ) ) )
+	try
 	{
-		TranslateMessage( &msg );
-		DispatchMessage( &msg );
-	}
+		Window wnd( 800, 300, "Honey Window!" );
 
-	if( gResult == -1 )
-	{
-		return -1;
+		// message pump
+		MSG msg;
+		BOOL gResult;
+		while( gResult = ( GetMessage( &msg, nullptr, 0, 0 ) ) )
+		{
+			TranslateMessage( &msg );
+			DispatchMessage( &msg );
+		}
+
+		if( gResult == -1 )
+		{
+			return -1;
+		}
+
+		return msg.wParam;
 	}
-	
-	return msg.wParam;
+	catch( const HoneyException& e )
+	{
+		MessageBox( nullptr, e.what(), e.GetType(), MB_OK | MB_ICONEXCLAMATION );
+	}
+	catch( const std::exception& e )
+	{
+		MessageBox( nullptr, e.what(), "Standard Exception", MB_OK | MB_ICONEXCLAMATION );
+	}
+	catch( ... )
+	{
+		MessageBox( nullptr, "No details available", "Unknown Exception", MB_OK | MB_ICONEXCLAMATION );
+	}
+	return -1;
 }
