@@ -163,6 +163,7 @@
     <ClCompile Include="hw3d\Window.cpp" />
     <ClCompile Include="hw3d\WindowsMessageMap.cpp" />
     <ClCompile Include="hw3d\WinMain.cpp" />
+    <ClCompile Include="hw3d\Keyboard.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="hw3d\HoneyException.h" />
@@ -170,6 +171,7 @@
     <ClInclude Include="hw3d\Window.h" />
     <ClInclude Include="hw3d\WindowsMessageMap.h" />
     <ClInclude Include="hw3d\resource.h" />
+    <ClInclude Include="hw3d\Keyboard.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Icon.ico">

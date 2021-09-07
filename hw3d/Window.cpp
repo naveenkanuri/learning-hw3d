@@ -120,6 +120,34 @@ LRESULT Window::HandleMsg( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )
 	case WM_CLOSE:
 		PostQuitMessage( 0 );
 		return 0;
+
+	//clear keystate when window loses focus to prevent input getting 
+	case WM_KILLFOCUS:
+		kbd.ClearState();
+		break;
+
+	/**************Keyboard messages**************/
+	case WM_KEYDOWN:
+	//sys key commands need to be handled to track the ALT key(VK_MENU)
+	case WM_SYSKEYDOWN:
+		// send press events if autorepeat is enabled 
+		// or the previous key state is Up before message is sent
+		// 30th bit in lParam is 1/0 if the key's previous state is down/up
+		if( !( lParam & 0x40000000 ) || kbd.AutorepeatIsEnabled() )
+		{
+			kbd.OnKeyPressed( static_cast< unsigned char >( wParam ) );
+		}
+		break;
+
+	case WM_KEYUP:
+	case WM_SYSKEYUP:
+		kbd.OnKeyReleased( static_cast< unsigned char > ( wParam ) );
+		break;
+
+	case WM_CHAR:
+		kbd.OnChar( static_cast< unsigned char > ( wParam ) );
+		break;
+	/**************End Keyboard messages**************/
 	}
 
 	return DefWindowProc( hWnd, msg, wParam, lParam );
