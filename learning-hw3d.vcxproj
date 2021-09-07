@@ -160,6 +160,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="hw3d\App.cpp" />
+    <ClCompile Include="hw3d\Graphics.cpp" />
     <ClCompile Include="hw3d\HoneyException.cpp" />
     <ClCompile Include="hw3d\HoneyTimer.cpp" />
     <ClCompile Include="hw3d\Mouse.cpp" />
@@ -170,6 +171,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="hw3d\App.h" />
+    <ClInclude Include="hw3d\Graphics.h" />
     <ClInclude Include="hw3d\HoneyException.h" />
     <ClInclude Include="hw3d\HoneyTimer.h" />
     <ClInclude Include="hw3d\HoneyWin.h" />
