@@ -21,9 +21,18 @@
     <ClCompile Include="hw3d\WindowsMessageMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="hw3d\Window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="hw3d\WindowsMessageMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="hw3d\HoneyWin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="hw3d\Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,7 +1,8 @@
-#include <Windows.h>
+#include "Window.h"
 #include "WindowsMessageMap.h"
 #include <sstream>
 
+/*
 // our custom WindowProcedure to handle windows' messages
 LRESULT CALLBACK WndProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )
 {
@@ -46,47 +47,14 @@ LRESULT CALLBACK WndProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )
 	}
 	return DefWindowProc( hWnd, msg, wParam, lParam );
 }
-
+*/
 int CALLBACK WinMain(
 	_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,
 	_In_ LPSTR lpCmdLine,
 	_In_ int nShowCmd )
 {
-	const wchar_t* pClassName = L"Honey";
-	// register window class
-	WNDCLASSEX wc = { 0 };
-	wc.cbSize = sizeof( wc );
-	wc.style = CS_OWNDC;
-	wc.lpfnWndProc = WndProc;
-	wc.cbClsExtra = 0;
-	wc.cbWndExtra = 0;
-	wc.hInstance = hInstance;
-	wc.hIcon = nullptr;
-	wc.hCursor = nullptr;
-	wc.hbrBackground = nullptr;
-	wc.lpszMenuName = nullptr;
-	wc.lpszClassName = pClassName;
-	wc.hIconSm = nullptr;
-
-	RegisterClassEx( &wc );
-
-	// create window instance
-
-	HWND hWnd = CreateWindowEx(
-		0,
-		pClassName,
-		L"Honey Window",
-		WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU,
-		200, 200, 640, 480,
-		nullptr,
-		nullptr,
-		hInstance,
-		nullptr
-	);
-
-	// show Window
-	ShowWindow( hWnd, SW_SHOW );
+	Window wnd( 800, 300, L"Honey Window!" );
 
 	// message pump
 	MSG msg;
