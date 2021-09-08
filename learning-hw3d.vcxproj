@@ -160,6 +160,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="hw3d\App.cpp" />
+    <ClCompile Include="hw3d\dxerr.cpp" />
+    <ClCompile Include="hw3d\DxgiInfoManager.cpp" />
     <ClCompile Include="hw3d\Graphics.cpp" />
     <ClCompile Include="hw3d\HoneyException.cpp" />
     <ClCompile Include="hw3d\HoneyTimer.cpp" />
@@ -171,6 +173,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="hw3d\App.h" />
+    <ClInclude Include="hw3d\dxerr.h" />
+    <ClInclude Include="hw3d\DxgiInfoManager.h" />
     <ClInclude Include="hw3d\Graphics.h" />
     <ClInclude Include="hw3d\HoneyException.h" />
     <ClInclude Include="hw3d\HoneyTimer.h" />
@@ -195,6 +199,11 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="hw3d\learning-hw3d.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="hw3d\DXGetErrorDescription.inl" />
+    <None Include="hw3d\DXGetErrorString.inl" />
+    <None Include="hw3d\DXTrace.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
