@@ -2,6 +2,7 @@
 #include "HoneyWin.h"
 #include "HoneyException.h"
 #include <d3d11.h>
+#include <wrl.h>
 #include <vector>
 #include "DxgiInfoManager.h"
 
@@ -37,19 +38,15 @@ public:
 	Graphics(HWND hWnd);
 	Graphics( const Graphics& ) = delete;
 	Graphics& operator=( const Graphics& ) = delete;
-	~Graphics();
+	~Graphics() = default;
 	void EndFrame();
-	void ClearBuffer( float red, float green, float blue ) noexcept
-	{
-		const float color[] = { red,green,blue,1.0f };
-		pContext->ClearRenderTargetView( pTarget, color );
-	}
+	void ClearBuffer( float red, float green, float blue ) noexcept;
 private:
 #ifndef NDEBUG
 	DxgiInfoManager infoManager;
 #endif
-	ID3D11Device* pDevice = nullptr;
-	IDXGISwapChain* pSwap = nullptr;
-	ID3D11DeviceContext* pContext = nullptr;
-	ID3D11RenderTargetView* pTarget = nullptr;
+	Microsoft::WRL::ComPtr <ID3D11Device> pDevice = nullptr;
+	Microsoft::WRL::ComPtr <IDXGISwapChain> pSwap = nullptr;
+	Microsoft::WRL::ComPtr <ID3D11DeviceContext> pContext = nullptr;
+	Microsoft::WRL::ComPtr <ID3D11RenderTargetView> pTarget = nullptr;
 };

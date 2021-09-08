@@ -1,7 +1,6 @@
 #include "DxgiInfoManager.h"
 #include "Window.h"
 #include "Graphics.h"
-#include <dxgidebug.h>
 #include <memory>
 
 #pragma comment(lib, "dxguid.lib")
@@ -26,7 +25,7 @@ DxgiInfoManager::DxgiInfoManager()
 		throw HONEY_LAST_EXCEPT();
 
 	HRESULT hr;
-	GFX_THROW_NOINFO( DxgiGetDebugInterface( __uuidof( IDXGIInfoQueue ), reinterpret_cast< void** >(&pDxgiInfoQueue )) );
+	GFX_THROW_NOINFO( DxgiGetDebugInterface( __uuidof( IDXGIInfoQueue ), &pDxgiInfoQueue ) );
 }
 
 void DxgiInfoManager::Set() noexcept
@@ -56,8 +55,3 @@ std::vector <std::string> DxgiInfoManager::GetMessages() const
 	return messages;
 }
 
-DxgiInfoManager::~DxgiInfoManager()
-{
-	if( !pDxgiInfoQueue )
-		pDxgiInfoQueue->Release();
-}
